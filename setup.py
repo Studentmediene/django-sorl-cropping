@@ -2,7 +2,7 @@ from distutils.core import setup
 from setuptools import find_packages
 
 setup(name="django-sorl-cropping",
-    version="0.1.0",
+    version="0.1.1",
     description="A reusable app for cropping images easily and non-destructively in Django",
     long_description=open('README.rst').read(),
     author="Ilya Chistyakov",

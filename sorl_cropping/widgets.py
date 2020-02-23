@@ -49,23 +49,23 @@ class CropWidget(object):
 
 
 class ImageCropWidget(AdminFileWidget, CropWidget):
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if not attrs:
             attrs = {}
         if value:
             attrs.update(get_attrs(value, name))
-        return super(AdminFileWidget, self).render(name, value, attrs)
+        return super(AdminFileWidget, self).render(name, value, attrs, renderer)
 
 
 class HiddenImageCropWidget(ImageCropWidget):
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if not attrs:
             attrs = {}
         # we need to hide it the whole field by JS because the admin
         # doesn't yet support hidden fields:
         # https://code.djangoproject.com/ticket/11277
         attrs['data-hide-field'] = True
-        return super(HiddenImageCropWidget, self).render(name, value, attrs)
+        return super(HiddenImageCropWidget, self).render(name, value, attrs, renderer)
 
 
 class CropForeignKeyWidget(ForeignKeyRawIdWidget, CropWidget):
@@ -85,7 +85,7 @@ class CropForeignKeyWidget(ForeignKeyRawIdWidget, CropWidget):
 
         super(CropForeignKeyWidget, self).__init__(*args, **kwargs)
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if attrs is None:
             attrs = {}
 
@@ -104,4 +104,4 @@ class CropForeignKeyWidget(ForeignKeyRawIdWidget, CropWidget):
             except AttributeError:
                 logger.error("Object %s.%s doesn't have an attribute named '%s'." % (
                     app_name, model_name, self.field_name))
-        return super(CropForeignKeyWidget, self).render(name, value, attrs)
+        return super(CropForeignKeyWidget, self).render(name, value, attrs, renderer)
